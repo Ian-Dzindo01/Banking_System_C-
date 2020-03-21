@@ -1,0 +1,10 @@
+Add record to file
+Show record from file - shows all the records in the file.
+Search record from file
+Update record
+Delete record
+Quit
+
+You could have arrays of classes or you could have arrays inside of classes.
+
+Maybe create an array like object(try to remember whats it called) and make an array and use it in the private declaration, so you can acces the different records just by numbers.
