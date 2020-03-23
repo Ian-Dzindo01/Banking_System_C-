@@ -35,8 +35,6 @@ public:
                 std::cerr << "Error opening file" << std::endl;
                 exit(1);
             }
-
-
         }
 
         else
@@ -45,9 +43,7 @@ public:
 
     void storeData()                // at the end of each operation you are going to call this function, and update the file, with the new vector.
     {
-        std::ofstream output_file("record.txt");
-        std::ostream_iterator<std::string> output_iterator(output_file, "\n");
-        std::copy(record.begin(), record.end(), output_iterator);
+
     };
 
     void print(int i)
