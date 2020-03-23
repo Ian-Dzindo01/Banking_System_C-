@@ -5,6 +5,14 @@ Update record
 Delete record
 Quit
 
-You could have arrays of classes or you could have arrays inside of classes.
+Using struct vectors and storing them inside of files might be a bit too complicated. Maybe try another solution. Solution are ranked by superiority:
+1. Try using arrays,
+2. Use the solution they have provided.
 
-Maybe create an array like object(try to remember whats it called) and make an array and use it in the private declaration, so you can acces the different records just by numbers.
+
+You can create a new file at each new update of the file, or you can just keep adding to the old file. It's up to you.
+
+infile.read(reinterpret_cast<char*>(this), sizeof(*this)) - this might be the key line to help you out.
+
+TASK FOR NOW:
+Try to store arrays or vectors inside of files.
