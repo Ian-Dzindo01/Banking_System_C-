@@ -97,6 +97,7 @@ public:
         recordInfo temp;
         strncpy(temp.first_name, name, 10);
         strncpy(temp.last_name, lastname, 10);
+        temp.balance = balance;
         record.push_back(temp);
     };
 
@@ -119,7 +120,7 @@ public:
 
         char fName[10];
         char lName[10];
-        int bal;
+        float bal;
         int num2;
 
         std::cout << "Enter record number: ";
@@ -129,6 +130,7 @@ public:
         print_data(num2-1, num2);
 
         std::cout << "Enter new data: \n";
+
         std::cout << "First name:";
         std::cin >> fName;
 
@@ -165,13 +167,13 @@ int main()
 
     while(true)
     {
-    std::cout << "\n ***Account Information System*** \n";
+    std::cout << "\n ***Account Information System*** \n \n";
     std::cout << "\t1-->Add record to file \n";
     std::cout << "\t2-->Show record from file \n";
     std::cout << "\t3-->Search record to file \n";
     std::cout << "\t4-->Update record \n";
     std::cout << "\t5-->Delete record \n";
-    std::cout << "\t6-->Quit \n";
+    std::cout << "\t6-->Quit \n \n";
     std::cout << "Enter your choice: \n";
 
     std::cin >> choice;
@@ -194,8 +196,8 @@ int main()
             CL.delete_record();
             break;
         case 6:
-            CL.storeData();
-            return 0;              // here you are going to store everything to the file finally.
+            CL.storeData();             // here you are going to store everything to the file finally.
+            return 0;
         };
     };
 
