@@ -18,6 +18,21 @@ struct recordInfo
     float balance;
 };
 
+void writevecfield(std::ostream& os, const std::vector<recordInfo> &vec)
+{
+    typename std::vector<recordInfo>::size_type sz = vec.size();          //size_type as an integer datatype large enough to represent any possible string size
+    os.write((char*)&sz, sizeof(sz));                                     // this writes the size of the data
+    os.write((char*)&vec[0], vec.size() * sizeof(recordInfo));            // this writes the data itself
+};
+
+void readvecfield(std::istream& is, std::vector<recordInfo> &vec)
+{
+    typename std::vector<recordInfo>::size_type sz = 0;
+    is.read((char*)&sz, sizeof(sz));
+    vec.resize(sz);
+    is.read((char*)&vec[0], vec.size() * sizeof(recordInfo));
+};
+
 class Record
 {
 
@@ -30,13 +45,15 @@ public:
             std::ifstream f1;
             f1.open("record.txt");
 
-            // Check for Error
             if(f1.fail()) {
                 std::cerr << "Error opening file" << std::endl;
                 exit(1);
             }
-        }
 
+            readvecfield(f1, record);
+
+            f1.close();
+            }
         else
             std::ofstream myfile("record.txt", std::ios::app);    // this signifies that it is in append mode. You create the file here, and store the values in it after finishing your operation.
     };
@@ -46,9 +63,9 @@ public:
 
     };
 
-    void print(int i)
+    void print_data(int i)
     {
-        std::cout << "Account number: " << record[i].acc_num << "\n";
+        std::cout << "\nAccount number: " << record[i].acc_num << "\n";
         std::cout << "First name: " << record[i].first_name << "\n";
         std::cout << "Last name: " << record[i].last_name << "\n";
         std::cout << "Balance: " << record[i].balance << "\n";
@@ -76,19 +93,56 @@ public:
         record.push_back(temp);
     };
 
-    void show_record_from_file()
+    void show_records_from_file()
     {
         for(int i = 0; i < record.size(); i++)
-            print(i);
+            print_data(i);
     };
 
+    void search_record()
+    {
+        int acc_num;
+        std::cout << "Enter account number: \n";
+        std::cin >> acc_num;
+        print_data(acc_num - 1);
+    }
 
-    };
+    void update_record()
+    {
+        int num;
+        std::cout << "Enter record number: ";
+        std::cin >> num;
 
-//    void search_record();
-//    void update_record();
-//    void delete_record();
+        std::string fName, lName;
+        int bal;
 
+        std::cout << "Current data:";
+        print_data(num);
+
+        std::cout << "Enter new data: \n";
+        std::cout << "First name:";
+        std::cin >> fName;
+        std::cout << "Last name:";
+        std::cin >> lName;
+        std::cout << "Balance:";
+        std::cin >> bal;
+
+        record[num].first_name = fName;
+        record[num].last_name = lName;
+        record[num].balance = bal;
+
+        std::cout << "Record successfully updated!";
+    }
+
+    void delete_record()
+    {
+        int num;
+        std::cout << "Enter record number: ";
+        std::cin >> num;
+        record.erase(record.begin() + num - 1);
+    }
+
+};
 
 int main()
 {
@@ -115,18 +169,18 @@ int main()
             CL.add_record();
             break;
         case 2:
-            CL.show_record_from_file();
+            CL.show_records_from_file();
             break;
-//        case 3:
-//            CL.search_record();
-//        case 4:
-//            CL.update_record();
-//        case 5:
-//            CL.delete_record();
-//        case 6:
-//            exit();
+        case 3:
+            CL.search_record();
+        case 4:
+            CL.update_record();
+        case 5:
+            CL.delete_record();
+        case 6:
+            exit(1);              // here you are going to store everything to the file finally.
         };
-    }
+    };
 
     return 0;
-}
+};

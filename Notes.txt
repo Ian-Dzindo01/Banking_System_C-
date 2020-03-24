@@ -15,4 +15,6 @@ You can create a new file at each new update of the file, or you can just keep a
 infile.read(reinterpret_cast<char*>(this), sizeof(*this)) - this might be the key line to help you out.
 
 TASK FOR NOW:
-Try to store arrays or vectors inside of files.
+Try to store arrays or vectors inside of files - ACHIEVED.
+
+Transfer the new code to your project.
