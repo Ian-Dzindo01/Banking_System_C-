@@ -12,7 +12,6 @@ bool fileExists(const char *fileName)
 
 struct recordInfo
 {
-    int acc_num;
     std::string first_name;
     std::string last_name;
     float balance;
@@ -63,9 +62,13 @@ public:
 
     };
 
-    void print_data(int i)
+    void print_data(int i, int mode=0)
     {
-        std::cout << "\nAccount number: " << record[i].acc_num << "\n";
+        if(mode == 0)
+            std::cout << "\nAccount number: " << record.size()-1 << "\n";
+        else
+            std::cout << "\nAccount number: " << mode << "\n";
+
         std::cout << "First name: " << record[i].first_name << "\n";
         std::cout << "Last name: " << record[i].last_name << "\n";
         std::cout << "Balance: " << record[i].balance << "\n";
@@ -75,13 +78,10 @@ public:
 
     void add_record()
     {
-        int num;
         std::string name;
         std::string lastname;
         float balance;
 
-        std::cout << "Account number:";
-        std::cin >> num;
         std::cout << "First name:";
         std::cin >> name;
         std::cout << "Last name:";
@@ -89,14 +89,14 @@ public:
         std::cout << "Balance:";
         std::cin >> balance;
 
-        recordInfo temp = {num, name, lastname, balance};
+        recordInfo temp = {name, lastname, balance};
         record.push_back(temp);
     };
 
     void show_records_from_file()
     {
         for(int i = 0; i < record.size(); i++)
-            print_data(i);
+            print_data(i, i + 1);
     };
 
     void search_record()
@@ -104,20 +104,21 @@ public:
         int acc_num;
         std::cout << "Enter account number: \n";
         std::cin >> acc_num;
-        print_data(acc_num - 1);
-    }
+        print_data(acc_num - 1, acc_num);
+    };
 
     void update_record()
     {
-        int num;
-        std::cout << "Enter record number: ";
-        std::cin >> num;
 
         std::string fName, lName;
         int bal;
+        int num2;
 
-        std::cout << "Current data:";
-        print_data(num);
+        std::cout << "Enter record number: ";
+        std::cin >> num2;
+
+        std::cout << "\n Current data: \n";
+        print_data(num2-1, num2);
 
         std::cout << "Enter new data: \n";
         std::cout << "First name:";
@@ -127,11 +128,11 @@ public:
         std::cout << "Balance:";
         std::cin >> bal;
 
-        record[num].first_name = fName;
-        record[num].last_name = lName;
-        record[num].balance = bal;
+        record[num2-1].first_name = fName;
+        record[num2-1].last_name = lName;
+        record[num2-1].balance = bal;
 
-        std::cout << "Record successfully updated!";
+        std::cout << "Record successfully updated! \n";
     }
 
     void delete_record()
@@ -139,7 +140,10 @@ public:
         int num;
         std::cout << "Enter record number: ";
         std::cin >> num;
+        print_data(num-1, num);
         record.erase(record.begin() + num - 1);
+
+        std::cout << "Record successfully deleted! \n";
     }
 
 };
@@ -152,14 +156,14 @@ int main()
 
     while(true)
     {
-    std::cout << "***Account Information System*** \n";
+    std::cout << "\n ***Account Information System*** \n";
     std::cout << "\t1-->Add record to file \n";
     std::cout << "\t2-->Show record from file \n";
     std::cout << "\t3-->Search record to file \n";
     std::cout << "\t4-->Update record \n";
     std::cout << "\t5-->Delete record \n";
     std::cout << "\t6-->Quit \n";
-    std::cout << "Enter your choice:";
+    std::cout << "Enter your choice: \n";
 
     std::cin >> choice;
 
@@ -173,10 +177,13 @@ int main()
             break;
         case 3:
             CL.search_record();
+            break;
         case 4:
             CL.update_record();
+            break;
         case 5:
             CL.delete_record();
+            break;
         case 6:
             exit(1);              // here you are going to store everything to the file finally.
         };
