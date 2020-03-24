@@ -18,3 +18,5 @@ TASK FOR NOW:
 Try to store arrays or vectors inside of files - ACHIEVED.
 
 Transfer the new code to your project.
+
+Everything seems to be fine, but strings arent registered. You are going to have to switch to char arrays.

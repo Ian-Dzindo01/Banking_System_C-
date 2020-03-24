@@ -3,6 +3,7 @@
 #include <vector>
 #include <iterator>
 #include <cstdlib>
+#include <cstring>
 
 bool fileExists(const char *fileName)
 {
@@ -12,8 +13,8 @@ bool fileExists(const char *fileName)
 
 struct recordInfo
 {
-    std::string first_name;
-    std::string last_name;
+    char first_name[10];
+    char last_name[10];
     float balance;
 };
 
@@ -59,7 +60,9 @@ public:
 
     void storeData()                // at the end of each operation you are going to call this function, and update the file, with the new vector.
     {
-
+        std::ofstream str1("record.txt");
+        writevecfield(str1, record);
+        str1.close();
     };
 
     void print_data(int i, int mode=0)
@@ -78,18 +81,22 @@ public:
 
     void add_record()
     {
-        std::string name;
-        std::string lastname;
+        char name[10];
+        char lastname[10];
         float balance;
 
         std::cout << "First name:";
         std::cin >> name;
+
         std::cout << "Last name:";
         std::cin >> lastname;
+
         std::cout << "Balance:";
         std::cin >> balance;
 
-        recordInfo temp = {name, lastname, balance};
+        recordInfo temp;
+        strncpy(temp.first_name, name, 10);
+        strncpy(temp.last_name, lastname, 10);
         record.push_back(temp);
     };
 
@@ -110,7 +117,8 @@ public:
     void update_record()
     {
 
-        std::string fName, lName;
+        char fName[10];
+        char lName[10];
         int bal;
         int num2;
 
@@ -123,13 +131,15 @@ public:
         std::cout << "Enter new data: \n";
         std::cout << "First name:";
         std::cin >> fName;
+
         std::cout << "Last name:";
         std::cin >> lName;
+
         std::cout << "Balance:";
         std::cin >> bal;
 
-        record[num2-1].first_name = fName;
-        record[num2-1].last_name = lName;
+        strncpy(record[num2-1].first_name, fName, 10);
+        strncpy(record[num2-1].last_name, lName, 10);
         record[num2-1].balance = bal;
 
         std::cout << "Record successfully updated! \n";
@@ -150,7 +160,6 @@ public:
 
 int main()
 {
-
     int choice;
     Record CL;
 
@@ -185,7 +194,8 @@ int main()
             CL.delete_record();
             break;
         case 6:
-            exit(1);              // here you are going to store everything to the file finally.
+            CL.storeData();
+            return 0;              // here you are going to store everything to the file finally.
         };
     };
 
